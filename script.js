@@ -1,36 +1,8 @@
-const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
-
-function jquery() {
-	var script = document.createElement('script');
-	script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
-	script.type = 'text/javascript';
-	document.getElementsByTagName('head')[0].appendChild(script);
-}
-
-jquery().then(() => {
-	// when loading from url
-	if (sPageURL[2] != '') {
-		var json = {};
-		
-		// get data from url arguments
-		split(sPageURL[2], /&/i, 10).forEach(arg => {
-			var keyVal = split(arg, /=/i, 1);
-			json[keyVal[0]] = keyVal[1];
-		});
-	
-		// convert hex string to rgb array
-		var hex = json.co;
-		json.co = [];
-		for (i = 0; i < 3; i++)
-			json.co[i] = parseInt(hex.substring(i * 2, i * 2 + 2), 16);
-	
-		createPage(json);
-	}
-});
-
 const serverURL = "https://web-dream-server.herokuapp.com";
 //serverURL = "http://localhost:5000";
 const socketURL = serverURL.replace(/^http/, 'ws') + '/websocket';
+
+const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
 
 var fileText = '';
 
@@ -85,7 +57,24 @@ function submit(event) {
 		webSocket.send(message);
 }
 
+// when loading from url
+if (sPageURL[2] != '') {
+	var json = {};
+	
+	// get data from url arguments
+	split(sPageURL[2], /&/i, 10).forEach(arg => {
+		var keyVal = split(arg, /=/i, 1);
+		json[keyVal[0]] = keyVal[1];
+	});
 
+	// convert hex string to rgb array
+	var hex = json.co;
+	json.co = [];
+	for (i = 0; i < 3; i++)
+		json.co[i] = parseInt(hex.substring(i * 2, i * 2 + 2), 16);
+
+	createPage(json);
+}
 
 // on door click
 function nextClick() {
