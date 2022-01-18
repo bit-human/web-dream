@@ -95,18 +95,17 @@ function nextClick() {
 	$.ajax({
 		url: serverURL + '/retrieve',
 		type: 'GET',
-	    dataType: "jsonp",
 		success: (json) => {
 			// generate random rgb array
+			console.log('a');
 			json.co = [];
 			for (i = 0; i < 3; i++)
 				json.co[i] = Math.floor(Math.random() * 256);
 	
 			createPage(json);
-		},
-		fail: () => {
-			title.innerHTML = "Failed to connect";
 		}
+	}).fail(() => {
+		title.innerHTML = "Failed to connect";
 	});
 }
 
@@ -189,7 +188,7 @@ function getText(json) {
 	$.ajax({
 		url: `https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`,
 		type: 'GET',
-	    dataType: "jsonp",
+	    dataType: 'jsonp',
 		success: (data) => {
 			text.innerHTML = processArticle(data.parse.text['*']);
 		}
