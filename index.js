@@ -10,6 +10,10 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
+	res.send('ping');
+});
+
+app.get('/retrieve', (req, res) => {
 	console.log('GET request');
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	goGet(req, res);
