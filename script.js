@@ -12,37 +12,23 @@ function createFile() {
 }
 
 // create websocket
-var webSocket;
-setupWebSocket();
+var webSocket = new WebSocket(socketURL);
 
-function setupWebSocket() {
-	webSocket = new WebSocket(socketURL);
-	
-	webSocket.onopen = () => { webSocket.send(''); }
-	
-	webSocket.onmessage = (messageEvent) => {
-		if (messageEvent.data == '') {
-			setTimeout(() => { webSocket.send(''); }, 50000);
-//			console.log('ping ' + new Date().getTime());
-		}
-		else
-			updateChat(messageEvent.data);
-	};
-	
-	webSocket.onclose = () => { updateChat('disconnected ' + new Date().getTime()); }
-}
+webSocket.onopen = () => { webSocket.send(''); }
 
-function updateChat(message) {
-	chat.innerHTML = chat.innerHTML + '\n' + message;
-	console.log(message);
-	
-	createFile();
-}
+webSocket.onmessage = (messageEvent) => {
+	if (messageEvent.data == '') {
+		setTimeout(() => { webSocket.send(''); }, 50000);
+//		console.log('ping ' + new Date().getTime());
+	}
+	else
+		updateChat(messageEvent.data);
+};
 
-form.addEventListener('submit', submit);
+webSocket.onclose = () => { updateChat('disconnected ' + new Date().getTime()); }
 
 // on form submit
-function submit(event) {
+form.addEventListener('submit', (event) => {
 	event.preventDefault();
 
 	var message = field.value;
@@ -50,6 +36,13 @@ function submit(event) {
 
 	if (webSocket.readyState == 1)
 		webSocket.send(message);
+});
+
+function updateChat(message) {
+	chat.innerHTML = chat.innerHTML + '\n' + message;
+	console.log(message);
+	
+	createFile();
 }
 
 // when loading from url
@@ -132,7 +125,6 @@ function createPage(json) {
 	audio.load();
 	audio.volume = .5;
 	
-	// get text from wikipedia
 	getText(json);
 
 	// convert rgb array to hex string
