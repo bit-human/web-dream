@@ -1,0 +1,70 @@
+body {
+    background-color: #000;
+    color: #fff;
+}
+
+pre {
+    margin-top: 30px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    font-family: serif;
+    line-height: 1.35;
+    font-size: 15px;
+    margin-top: 0px;
+    margin-bottom: 3px;
+}
+
+#loading, #panel {
+    display: none;
+}
+
+#panel {
+    margin-left: 270px;
+    margin-right: 40px;
+}
+
+#image {
+    display: block;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    max-width: 600px;
+    max-height: 540px;
+}
+
+#download {
+    float: right;
+}
+
+#next, #loading, #mute, #about, #lovenote {
+    position: fixed;
+}
+
+#next, #loading {
+    bottom: 10px;
+    left: 19px;
+}
+
+#mute {
+    bottom: 87px;
+    left: 104px;
+}
+
+#about {
+    top: 4px;
+    right: 5px;
+}
+
+#lovenote {
+    bottom: 170px;
+    left: 7px;
+    max-width: 256px;
+}
+
+#field {
+    border: none;
+    background-color: rgb(0, 0, 0, 0);
+    color: #fff;
+    font-family: serif;
+}
