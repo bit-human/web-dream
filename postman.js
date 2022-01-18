@@ -5,7 +5,7 @@ export const websocket = (server) => {
 	
 	wss.on('connection', function connection(ws) {
 		var ip = ws._socket.remoteAddress.split(':');
-		ip = ip[ip.length-1];
+		ip = ip[ip.length - 1];
 		
 	    ws.on('message', function(message) {
 			if (message.toString() == '')
