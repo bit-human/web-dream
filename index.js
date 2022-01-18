@@ -9,15 +9,15 @@ import { goGet } from './gogetter.js';
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.send('');
-});
-
 app.get('/retrieve', (req, res) => {
 	console.log('GET request');
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	goGet(req, res);
+});
+
+app.get('/', (req, res) => {
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.send('');
 });
 
 const PORT = process.env.PORT || 5000;
