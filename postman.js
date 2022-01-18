@@ -20,6 +20,7 @@ export const websocket = (server) => {
 	
 	wss.broadcast = function broadcast(msg) {
 	   console.log(msg);
+	   
 	   wss.clients.forEach(function each(client) {
 	       client.send(msg);
 	    });

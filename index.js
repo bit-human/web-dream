@@ -16,7 +16,6 @@ app.get('/retrieve', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.send('<a href=https://web-dream.herokuapp.com/>https://web-dream.herokuapp.com/</a>');
 });
 
