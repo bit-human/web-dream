@@ -1,5 +1,4 @@
 const serverURL = "https://web-dream-server.herokuapp.com";
-//serverURL = "http://localhost:5000";
 const socketURL = serverURL.replace(/^http/, 'ws') + '/websocket';
 
 const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
@@ -183,8 +182,13 @@ function getText(json) {
 //	text.innerHTML = processArticle(json.tx ? json.tx : '');
 	delete json.tx;
 	
-	$.get(`https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`, (data) => {
-		text.innerHTML = processArticle(data.parse.text['*']);
+	$.ajax({
+		url: `https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`,
+		type:'GET',
+	    dataType: "jsonp",
+		success: function(data) {
+			text.innerHTML = processArticle(data.parse.text['*']);
+		}
 	});
 }
 
