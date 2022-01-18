@@ -10,7 +10,8 @@ export const gettext = async (json, client) => {
 		res.on('data', (chunk) => {
 			response = response + chunk.toString();
 		}).on('end', () => {
-			json.wt = encodeURIComponent(JSON.parse(response).query.pages[Object.keys(data.query.pages)[0]].title);
+			var data = JSON.parse(response);
+			json.wt = encodeURIComponent(data.query.pages[Object.keys(data.query.pages)[0]].title);
 			console.log(`https://en.wikipedia.org/wiki/${json.wt}`);
 			got(json, client);
 		});
