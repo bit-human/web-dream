@@ -102,9 +102,10 @@ function nextClick() {
 				json.co[i] = Math.floor(Math.random() * 256);
 	
 			createPage(json);
+		},
+		fail: () => {
+			title.innerHTML = "Failed to connect";
 		}
-	}).fail(() => {
-		title.innerHTML = "Failed to connect";
 	});
 }
 
