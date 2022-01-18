@@ -179,12 +179,9 @@ function createPage(json) {
 
 // get text from wikipedia
 function getText(json) {
-//	text.innerHTML = processArticle(json.tx ? json.tx : '');
-	delete json.tx;
-	
 	$.ajax({
 		url: `https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`,
-		type:'GET',
+		type: 'GET',
 	    dataType: "jsonp",
 		success: function(data) {
 			text.innerHTML = processArticle(data.parse.text['*']);
