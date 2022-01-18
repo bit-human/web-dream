@@ -7,7 +7,7 @@ function jquery() {
 	document.getElementsByTagName('head')[0].appendChild(script);
 }
 
-jquery.then(() => {
+jquery().then(() => {
 	// when loading from url
 	if (sPageURL[2] != '') {
 		var json = {};
