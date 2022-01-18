@@ -91,13 +91,18 @@ function nextClick() {
 	field.style.color = '#fff';
 	
 	// make http get request to server
-	$.get(serverURL + '/retrieve', (json) => {
-		// generate random rgb array
-		json.co = [];
-		for (i = 0; i < 3; i++)
-			json.co[i] = Math.floor(Math.random() * 256);
-
-		createPage(json);
+	$.ajax({
+		url: serverURL + '/retrieve',
+		type: 'GET',
+	    dataType: "jsonp",
+		success: (json) => {
+			// generate random rgb array
+			json.co = [];
+			for (i = 0; i < 3; i++)
+				json.co[i] = Math.floor(Math.random() * 256);
+	
+			createPage(json);
+		}
 	}).fail(() => {
 		title.innerHTML = "Failed to connect";
 	});
@@ -183,7 +188,7 @@ function getText(json) {
 		url: `https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`,
 		type: 'GET',
 	    dataType: "jsonp",
-		success: function(data) {
+		success: (data) => {
 			text.innerHTML = processArticle(data.parse.text['*']);
 		}
 	});
