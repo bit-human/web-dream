@@ -187,9 +187,17 @@ function createPage(json) {
 function getText(json) {
 //	text.innerHTML = processArticle(json.tx ? json.tx : '');
 	delete json.tx;
-	$.get(`https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`, (data) => {
-		text.innerHTML = processArticle(data.parse.text['*']);
-	});
+	
+	var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+			var data = JSON.parse(xmlHttp.response);
+			text.innerHTML = processArticle(data.parse.text['*']);
+		}
+    }
+
+    xmlHttp.open("GET", `https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`, true);
+    xmlHttp.send(null);
 }
 
 // process wikipedia article
