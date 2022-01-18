@@ -1,4 +1,5 @@
-const serverURL = "https://web-dream-server.herokuapp.com";
+var serverURL = "https://web-dream-server.herokuapp.com";
+//serverURL = "http://localhost:5000"
 const socketURL = serverURL.replace(/^http/, 'ws') + '/websocket';
 
 const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
