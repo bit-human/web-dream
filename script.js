@@ -1,5 +1,4 @@
-var serverURL = "https://web-dream-server.herokuapp.com";
-//serverURL = "http://localhost:5000"
+const serverURL = "https://web-dream-server.herokuapp.com";
 const socketURL = serverURL.replace(/^http/, 'ws') + '/websocket';
 
 const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
@@ -19,11 +18,9 @@ setupWebSocket();
 function setupWebSocket() {
 	webSocket = new WebSocket(socketURL);
 	
-	webSocket.onopen = () => {
-		webSocket.send('');
-	}
+	webSocket.onopen = () => { webSocket.send(''); }
 	
-	webSocket.onmessage = function(messageEvent) {
+	webSocket.onmessage = (messageEvent) => {
 		if (messageEvent.data == '') {
 			setTimeout(() => { webSocket.send(''); }, 50000);
 //			console.log('ping ' + new Date().getTime());
@@ -32,9 +29,7 @@ function setupWebSocket() {
 			updateChat(messageEvent.data);
 	};
 	
-	webSocket.onclose = function() {
-		updateChat('disconnected ' + new Date().getTime());
-	}
+	webSocket.onclose = () => { updateChat('disconnected ' + new Date().getTime()); }
 }
 
 function updateChat(message) {
@@ -97,7 +92,6 @@ function nextClick() {
 		type: 'GET',
 		success: (json) => {
 			// generate random rgb array
-			console.log('a');
 			json.co = [];
 			for (i = 0; i < 3; i++)
 				json.co[i] = Math.floor(Math.random() * 256);
@@ -192,6 +186,8 @@ function getText(json) {
 		success: (data) => {
 			text.innerHTML = processArticle(data.parse.text['*']);
 		}
+	}).fail(() => {
+		text.innerHTML = `<a href="https://en.wikipedia.org/wiki/${json.wt}">https://en.wikipedia.org/wiki/${json.wt}</a>`
 	});
 }
 
