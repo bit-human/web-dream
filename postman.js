@@ -8,7 +8,7 @@ export const websocket = (server) => {
 		
 	    ws.on('message', function(message) {
 			if (message.toString() == '')
-				setTimeout(() => { ws.send(''); }, 25000);
+				setTimeout(() => { ws.send(''); }, 50000);
 			else
 				wss.broadcast(`${ip}: ${message.toString()}`);
 	    });
