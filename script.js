@@ -185,11 +185,11 @@ function createPage(json) {
 
 // get text from wikipedia
 function getText(json) {
-	text.innerHTML = processArticle(json.tx ? json.tx : '');
+//	text.innerHTML = processArticle(json.tx ? json.tx : '');
 	delete json.tx;
-//	$.get(`https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`, (data) => {
-//		text.innerHTML = processArticle(data.parse.text['*']);
-//	});
+	$.get(`https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`, (data) => {
+		text.innerHTML = processArticle(data.parse.text['*']);
+	});
 }
 
 // process wikipedia article
