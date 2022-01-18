@@ -1,7 +1,13 @@
-var script = document.createElement('script');
-script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
-script.type = 'text/javascript';
-document.getElementsByTagName('head')[0].appendChild(script).then(() => {
+const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
+
+function jquery() {
+	var script = document.createElement('script');
+	script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
+	script.type = 'text/javascript';
+	document.getElementsByTagName('head')[0].appendChild(script);
+}
+
+jquery.then(() => {
 	// when loading from url
 	if (sPageURL[2] != '') {
 		var json = {};
@@ -22,11 +28,9 @@ document.getElementsByTagName('head')[0].appendChild(script).then(() => {
 	}
 });
 
-var serverURL = "https://web-dream-server.herokuapp.com";
+const serverURL = "https://web-dream-server.herokuapp.com";
 //serverURL = "http://localhost:5000";
 const socketURL = serverURL.replace(/^http/, 'ws') + '/websocket';
-
-const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
 
 var fileText = '';
 
