@@ -1,7 +1,26 @@
 var script = document.createElement('script');
 script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
 script.type = 'text/javascript';
-document.getElementsByTagName('head')[0].appendChild(script);
+document.getElementsByTagName('head')[0].appendChild(script).then(() => {
+	// when loading from url
+	if (sPageURL[2] != '') {
+		var json = {};
+		
+		// get data from url arguments
+		split(sPageURL[2], /&/i, 10).forEach(arg => {
+			var keyVal = split(arg, /=/i, 1);
+			json[keyVal[0]] = keyVal[1];
+		});
+	
+		// convert hex string to rgb array
+		var hex = json.co;
+		json.co = [];
+		for (i = 0; i < 3; i++)
+			json.co[i] = parseInt(hex.substring(i * 2, i * 2 + 2), 16);
+	
+		createPage(json);
+	}
+});
 
 var serverURL = "https://web-dream-server.herokuapp.com";
 //serverURL = "http://localhost:5000";
@@ -62,24 +81,7 @@ function submit(event) {
 		webSocket.send(message);
 }
 
-// when loading from url
-if (sPageURL[2] != '') {
-	var json = {};
-	
-	// get data from url arguments
-	split(sPageURL[2], /&/i, 10).forEach(arg => {
-		var keyVal = split(arg, /=/i, 1);
-		json[keyVal[0]] = keyVal[1];
-	});
 
-	// convert hex string to rgb array
-	var hex = json.co;
-	json.co = [];
-	for (i = 0; i < 3; i++)
-		json.co[i] = parseInt(hex.substring(i * 2, i * 2 + 2), 16);
-
-	createPage(json);
-}
 
 // on door click
 function nextClick() {
@@ -188,16 +190,9 @@ function getText(json) {
 //	text.innerHTML = processArticle(json.tx ? json.tx : '');
 	delete json.tx;
 	
-	var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-			var data = JSON.parse(xmlHttp.response);
-			text.innerHTML = processArticle(data.parse.text['*']);
-		}
-    }
-
-    xmlHttp.open("GET", `https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`, true);
-    xmlHttp.send(null);
+	$.get(`https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`, (data) => {
+		text.innerHTML = processArticle(data.parse.text['*']);
+	});
 }
 
 // process wikipedia article
