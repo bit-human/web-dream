@@ -17,7 +17,7 @@ app.get('/retrieve', (req, res) => {
 
 app.get('/', (req, res) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.send('https://web-dream.herokuapp.com/');
+	res.send('<a href=https://web-dream.herokuapp.com/>https://web-dream.herokuapp.com/</a>');
 });
 
 const PORT = process.env.PORT || 5000;
