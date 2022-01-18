@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.send('ping');
+	res.send('');
 });
 
 app.get('/retrieve', (req, res) => {

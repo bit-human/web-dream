@@ -7,7 +7,8 @@ export const websocket = (server) => {
 		var ip = ws._socket.remoteAddress;
 		
 	    ws.on('message', function(message) {
-			wss.broadcast(`${ip}: ${message.toString()}`);
+			if (message.toString() != '')
+				wss.broadcast(`${ip}: ${message.toString()}`);
 	    });
 	    ws.on('close', () => wss.broadcast(`${ip} is disconnected`));
 	    
