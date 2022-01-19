@@ -33,7 +33,7 @@ pre {
     max-height: 540px;
 }
 
-#download {
+#download, #share {
     float: right;
 }
 
