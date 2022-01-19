@@ -134,11 +134,11 @@ function createPage(json) {
 		json.co = json.co + ('00'+rgb[i].toString(16)).slice(-2);
 
 	// create share link
-    var shareURL = sPageURL[0] + '?';
+    share.href = sPageURL[0] + '?';
 	Object.keys(json).forEach(arg => {
-		shareURL = shareURL + `${arg}=${json[arg]}&`;
+		share.href = share.href + `${arg}=${json[arg]}&`;
 	})
-	shareURL = shareURL.substring(0, shareURL.length-1);
+	share.href = share.href.substring(0, shareURL.length-1);
 	
 	// create source links
 	var flickr = `https://www.flickr.com/photos/${json.ow}/${json.pi}`;
@@ -146,11 +146,9 @@ function createPage(json) {
 	var freesound = `https://freesound.org/people/${json.au}/sounds/${json.si}/`;
 
 	// create file download
-	fileText = shareURL + '\n' + `${rgb[0]}, ${rgb[1]}, ${rgb[2]}` + '\n' + flickr + `\n` + wikipedia + '\n' + freesound;
+	fileText = share.href + '\n' + `${rgb[0]}, ${rgb[1]}, ${rgb[2]}` + '\n' + flickr + `\n` + wikipedia + '\n' + freesound;
 	download.download = 'Dream ' + rgb[0] + rgb[1] + rgb[2] + '.txt';
 	createFile();
-    
-    share.href = shareURL
 
 	// determine black or white text color
 	var textColor = blackorwhite(rgb);
@@ -166,7 +164,7 @@ function createPage(json) {
 	loading.style.display = 'none';
 	next.style.display = 'block';
 
-	console.log(shareURL);
+	console.log(share.href);
 	console.log(flickr);
 	console.log(wikipedia);
 	console.log(freesound);
