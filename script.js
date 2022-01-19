@@ -138,7 +138,7 @@ function createPage(json) {
 	Object.keys(json).forEach(arg => {
 		share.href = share.href + `${arg}=${json[arg]}&`;
 	})
-	share.href = share.href.substring(0, shareURL.length-1);
+	share.href = share.href.substring(0, share.href.length-1);
 	
 	// create source links
 	var flickr = `https://www.flickr.com/photos/${json.ow}/${json.pi}`;
