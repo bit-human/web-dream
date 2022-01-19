@@ -164,6 +164,7 @@ function createPage(json) {
 	loading.style.display = 'none';
 	next.style.display = 'block';
 
+	console.log(share.href);
 	console.log(flickr);
 	console.log(wikipedia);
 	console.log(freesound);
