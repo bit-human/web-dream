@@ -1,13 +1,16 @@
 body {
     background-color: #000;
-    color: #fff;
+}
+
+pre, #field {
+	color: #fff;
+    font-family: "times new roman", serif;
 }
 
 pre {
     margin-top: 30px;
     word-wrap: break-word;
     white-space: pre-wrap;
-    font-family: serif;
     line-height: 1.35;
     font-size: 15px;
     margin-top: 0px;
@@ -65,6 +68,4 @@ pre {
 #field {
     border: none;
     background-color: rgb(0, 0, 0, 0);
-    color: #fff;
-    font-family: serif;
 }
