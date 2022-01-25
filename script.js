@@ -79,6 +79,9 @@ function nextClick() {
 	document.body.style.backgroundColor = '#000';
 	field.style.color = '#fff';
 	
+	image.src = null;
+	text.innerHTML = null;
+	
 	// make http get request to server
 	$.ajax({
 		url: serverURL + '/retrieve',
