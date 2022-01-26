@@ -5,6 +5,11 @@ const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
 
 var loaded = [false, false];
 var bgColor;
+	
+image.addEventListener('load', () => {
+	loaded[0] = true;
+	display();
+});
 
 var fileText;
 
@@ -167,16 +172,6 @@ function createPage(json) {
 	console.log(flickr);
 	console.log(wikipedia);
 	console.log(freesound);
-	
-	if (img.complete)
-		imgload();
-	else
-		img.addEventListener('load', imgload);
-}
-
-function imgload() {
-	loaded[0] = true;
-	display();
 }
 
 function display() {
