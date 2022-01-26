@@ -4,7 +4,7 @@ const socketURL = serverURL.replace(/^http/, 'ws') + '/websocket';
 const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
 
 var loaded = [false, false];
-var bgColor;
+var bgColor, flickr, wikipedia, freesound;
 	
 image.addEventListener('load', () => {
 	loaded[0] = true;
@@ -154,9 +154,9 @@ function createPage(json) {
 	share.href = share.href.substring(0, share.href.length-1);
 	
 	// create source links
-	var flickr = `https://www.flickr.com/photos/${json.ow}/${json.pi}`;
-	var wikipedia = `https://en.wikipedia.org/wiki/${json.wt}`;
-	var freesound = `https://freesound.org/people/${json.au}/sounds/${json.si}/`;
+	flickr = `https://www.flickr.com/photos/${json.ow}/${json.pi}`;
+	wikipedia = `https://en.wikipedia.org/wiki/${json.wt}`;
+	freesound = `https://freesound.org/people/${json.au}/sounds/${json.si}/`;
 
 	// create file download
 	fileText = share.href + '\n' + `${rgb[0]}, ${rgb[1]}, ${rgb[2]}` + '\n' + flickr + `\n` + wikipedia + '\n' + freesound;
@@ -165,11 +165,6 @@ function createPage(json) {
 
 	// determine black or white text color
 	textColor = blackorwhite(rgb);
-
-	console.log(share.href);
-	console.log(flickr);
-	console.log(wikipedia);
-	console.log(freesound);
 }
 
 function display() {
@@ -187,6 +182,11 @@ function display() {
 		next.style.display = 'block';
 		
 		loaded = [false, false];
+
+		console.log(share.href);
+		console.log(flickr);
+		console.log(wikipedia);
+		console.log(freesound);
 	}
 }
 
