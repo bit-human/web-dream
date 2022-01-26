@@ -3,7 +3,10 @@ const socketURL = serverURL.replace(/^http/, 'ws') + '/websocket';
 
 const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
 
-var fileText = '';
+var loaded = [false, false];
+var bgColor;
+
+var fileText;
 
 // create and set download button link
 function createFile() {
@@ -135,6 +138,8 @@ function createPage(json) {
 	json.co = '';
 	for (var i = 0; i < 3; i++)
 		json.co = json.co + ('00'+rgb[i].toString(16)).slice(-2);
+	
+	bgColor = json.co;
 
 	// create share link
     share.href = sPageURL[0] + '?';
@@ -158,19 +163,35 @@ function createPage(json) {
 	field.style.color = textColor;
 	document.body.style.color = textColor;
 
-	// display elements
-	document.body.style.background = '#' + json.co;
-	panel.style.display = 'block';
-	playAudio();
-
-	// display buttons
-	loading.style.display = 'none';
-	next.style.display = 'block';
-
 	console.log(share.href);
 	console.log(flickr);
 	console.log(wikipedia);
 	console.log(freesound);
+	
+	if (img.complete)
+		imgload();
+	else
+		img.addEventListener('load', imgload);
+}
+
+function imgload() {
+	loaded[0] = true;
+	display();
+}
+
+function display() {
+	if (loaded[0] && loaded[1]) {
+		// display elements
+		document.body.style.background = '#' + bgColor;
+		panel.style.display = 'block';
+		playAudio();
+	
+		// display buttons
+		loading.style.display = 'none';
+		next.style.display = 'block';
+		
+		loaded = [false, false];
+	}
 }
 
 // get text from wikipedia
@@ -181,6 +202,8 @@ function getText(json) {
 	    dataType: 'jsonp',
 		success: (data) => {
 			text.innerHTML = processArticle(data.parse.text['*']);
+			loaded[1] = true;
+			display();
 		}
 	}).fail(() => {
 		text.innerHTML = `<a href="https://en.wikipedia.org/wiki/${json.wt}">https://en.wikipedia.org/wiki/${json.wt}</a>`
