@@ -87,7 +87,7 @@ function nextClick() {
 	document.body.style.backgroundColor = '#000';
 	field.style.color = '#fff';
 	
-	image.src = null;
+	image.src = "";
 	text.innerHTML = null;
 	
 	// make http get request to server
@@ -164,9 +164,7 @@ function createPage(json) {
 	createFile();
 
 	// determine black or white text color
-	var textColor = blackorwhite(rgb);
-	field.style.color = textColor;
-	document.body.style.color = textColor;
+	textColor = blackorwhite(rgb);
 
 	console.log(share.href);
 	console.log(flickr);
@@ -176,6 +174,9 @@ function createPage(json) {
 
 function display() {
 	if (loaded[0] && loaded[1]) {
+		field.style.color = textColor;
+		document.body.style.color = textColor;
+		
 		// display elements
 		document.body.style.background = '#' + bgColor;
 		panel.style.display = 'block';
