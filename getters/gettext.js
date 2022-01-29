@@ -23,10 +23,10 @@ function getTumblr(json, client) {
 		res.on('data', (chunk) => {
 			response = response + chunk.toString();
 		}).on('end', () => {
-			var data = JSON.parse(response).response[0];
-			if (data) {
-				json.tn = data.blog_name;
-				json.ti = data.id;
+			var data = JSON.parse(response);
+			if (data.response[0]) {
+				json.tn = data.response[0].blog_name;
+				json.ti = data.response[0].id;
 				
 				console.log(`https://${json.tn}.tumblr.com/post/${json.ti}`);
 				got(json, client);
