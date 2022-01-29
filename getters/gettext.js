@@ -29,12 +29,12 @@ function getTumblr(json, client) {
 				json.ti = data.response[0].id;
 				
 			}
-			else{
-				json.tn = '';
-				json.ti = '';
-			}
 			
-				console.log(`https://${json.tn}.tumblr.com/post/${json.ti}`);
+			console.log(`https://${json.tn}.tumblr.com/post/${json.ti}`);
+			got(json, client);
+		}).on('error', (e) => {
+			json.tn = '';
+			json.ti = '';
 			got(json, client);
 		});
 	}).on('error', (e) => {
