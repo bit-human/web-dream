@@ -17,6 +17,14 @@ pre {
     margin-bottom: 3px;
 }
 
+p {
+	margin-bottom: 18.9px;
+}
+
+i p {
+	margin: 0px;
+}
+
 #loading, #panel {
     display: none;
 }

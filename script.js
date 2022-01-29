@@ -1,10 +1,10 @@
-const serverURL = "https://web-dream-server.herokuapp.com";
+var serverURL = "https://web-dream-server.herokuapp.com";
 const socketURL = serverURL.replace(/^http/, 'ws') + '/websocket';
 
 const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
 
 var loaded = [false, false];
-var bgColor, flickr, wikipedia, freesound;
+var bgColor, flickr, wikipedia, freesound, tumblr;
 	
 image.addEventListener('load', () => {
 	loaded[0] = true;
@@ -58,7 +58,7 @@ if (sPageURL[2] != '') {
 	var json = {};
 	
 	// get data from url arguments
-	split(sPageURL[2], /&/i, 10).forEach(arg => {
+	split(sPageURL[2], /&/i, 14).forEach(arg => {
 		var keyVal = split(arg, /=/i, 1);
 		json[keyVal[0]] = keyVal[1];
 	});
@@ -88,7 +88,7 @@ function nextClick() {
 	field.style.color = '#fff';
 	
 	image.src = "";
-	text.innerHTML = null;
+	text.innerHTML = "";
 	
 	// make http get request to server
 	$.ajax({
@@ -136,6 +136,12 @@ function createPage(json) {
 	audio.load();
 	audio.volume = .5;
 	
+	// create source links
+	flickr = `https://www.flickr.com/photos/${json.ow}/${json.pi}`;
+	tumblr = `https://${json.tn}.tumblr.com/post/${json.ti}`;
+	wikipedia = `https://en.wikipedia.org/wiki/${json.wt}`;
+	freesound = `https://freesound.org/people/${json.au}/sounds/${json.si}/`;
+	
 	getText(json);
 
 	// convert rgb array to hex string
@@ -152,14 +158,9 @@ function createPage(json) {
 		share.href = share.href + `${arg}=${json[arg]}&`;
 	})
 	share.href = share.href.substring(0, share.href.length-1);
-	
-	// create source links
-	flickr = `https://www.flickr.com/photos/${json.ow}/${json.pi}`;
-	wikipedia = `https://en.wikipedia.org/wiki/${json.wt}`;
-	freesound = `https://freesound.org/people/${json.au}/sounds/${json.si}/`;
 
 	// create file download
-	fileText = share.href + '\n' + `${rgb[0]}, ${rgb[1]}, ${rgb[2]}` + '\n' + flickr + `\n` + wikipedia + '\n' + freesound;
+	fileText = share.href + '\n' + `${rgb[0]}, ${rgb[1]}, ${rgb[2]}` + '\n' + flickr + `\n` + tumblr + `\n` + wikipedia + '\n' + freesound;
 	download.download = 'Dream ' + rgb[0] + rgb[1] + rgb[2] + '.txt';
 	createFile();
 
@@ -185,24 +186,41 @@ function display() {
 
 		console.log(share.href);
 		console.log(flickr);
+		console.log(tumblr);
 		console.log(wikipedia);
 		console.log(freesound);
 	}
 }
 
-// get text from wikipedia
+// get text from tumblr and wikipedia
 function getText(json) {
 	$.ajax({
-		url: `https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`,
+		url: `https://api.tumblr.com/v2/blog/${json.tn}/posts?id=${json.ti}&api_key=aCoaPWBdaJhpwqjwQYJ50wW02EgYjwVK2mmc3yBU0Gs8fHGLZ3`,
 		type: 'GET',
 	    dataType: 'jsonp',
 		success: (data) => {
-			text.innerHTML = processArticle(data.parse.text['*']);
-			loaded[1] = true;
-			display();
+			if (data.response.posts[0].trail[0]) {
+				var content = data.response.posts[0].trail[0].content;
+				var title = data.response.posts[0].title;
+				var question = data.response.posts[0].question;
+				text.innerHTML = text.innerHTML + '<i>' + (title ? title : '') + (question ? question : '') + content + '</i><hr>';
+			}
 		}
 	}).fail(() => {
-		text.innerHTML = `<a href="https://en.wikipedia.org/wiki/${json.wt}">https://en.wikipedia.org/wiki/${json.wt}</a>`
+		
+	}).always(() => {
+		$.ajax({
+			url: `https://en.wikipedia.org/w/api.php?action=parse&page=${json.wt}&format=json`,
+			type: 'GET',
+		    dataType: 'jsonp',
+			success: (data) => {
+				text.innerHTML = text.innerHTML + processArticle(data.parse.text['*']);
+				loaded[1] = true;
+				display();
+			}
+		}).fail(() => {
+			text.innerHTML = text.innerHTML + `<a href="${wikipedia}">${wikipedia}</a>\n`;
+		});
 	});
 }
 
