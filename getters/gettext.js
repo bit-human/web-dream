@@ -31,7 +31,7 @@ function getTumblr(json, client) {
 				console.log(`https://${json.tn}.tumblr.com/post/${json.ti}`);
 				got(json, client);
 			}
-			else if(errors[0].title = 'Limit Exceeded') {
+			else if(data.errors[0].title = 'Limit Exceeded') {
 				json.ti = '';
 				got(json, client);
 			}
