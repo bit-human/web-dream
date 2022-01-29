@@ -27,14 +27,13 @@ function getTumblr(json, client) {
 			if (data.response[0]) {
 				json.tn = data.response[0].blog_name;
 				json.ti = data.response[0].id;
-				
+			}
+			else {
+				json.tn = '';
+				json.ti = '';
 			}
 			
 			console.log(`https://${json.tn}.tumblr.com/post/${json.ti}`);
-			got(json, client);
-		}).on('error', (e) => {
-			json.tn = '';
-			json.ti = '';
 			got(json, client);
 		});
 	}).on('error', (e) => {
