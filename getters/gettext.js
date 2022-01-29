@@ -24,7 +24,7 @@ function getTumblr(json, client) {
 			response = response + chunk.toString();
 		}).on('end', () => {
 			var data = JSON.parse(response);
-			if (data.response[0].blog_name) {
+			if (data.response[0]) {
 				json.tn = data.response[0].blog_name;
 				json.ti = data.response[0].id;
 				
