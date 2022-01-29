@@ -24,15 +24,17 @@ function getTumblr(json, client) {
 			response = response + chunk.toString();
 		}).on('end', () => {
 			var data = JSON.parse(response);
-			if (data.response[0]) {
+			if (data.response[0].blog_name) {
 				json.tn = data.response[0].blog_name;
 				json.ti = data.response[0].id;
 				
 				console.log(`https://${json.tn}.tumblr.com/post/${json.ti}`);
 				got(json, client);
 			}
-			else
-				console.log(data);
+			else{
+				json.tn = '';
+				json.ti = '';
+			}
 		});
 	}).on('error', (e) => {
 		console.error(`Got error: ${e.message}`);
