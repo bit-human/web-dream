@@ -29,8 +29,8 @@ function getTumblr(json, client) {
 				json.ti = data.response[0].id;
 			}
 			else {
-				json.tn = '';
-				json.ti = '';
+				json.tn = '0';
+				json.ti = '0';
 			}
 			
 			console.log(`https://${json.tn}.tumblr.com/post/${json.ti}`);
