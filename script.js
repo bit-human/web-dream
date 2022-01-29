@@ -58,7 +58,7 @@ if (sPageURL[2] != '') {
 	var json = {};
 	
 	// get data from url arguments
-	split(sPageURL[2], /&/i, 14).forEach(arg => {
+	split(sPageURL[2], /&/i, 12).forEach(arg => {
 		var keyVal = split(arg, /=/i, 1);
 		json[keyVal[0]] = keyVal[1];
 	});
