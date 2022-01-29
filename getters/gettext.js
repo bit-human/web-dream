@@ -32,6 +32,7 @@ function getTumblr(json, client) {
 				got(json, client);
 			}
 			else if(data.errors[0].title = 'Limit Exceeded') {
+				json.tn = '';
 				json.ti = '';
 				got(json, client);
 			}
