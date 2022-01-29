@@ -10,7 +10,7 @@ export const goGet = async (req, res) => {
 }
 
 export const got = (json, res) => {
-	if (json.au !== undefined && json.ow !== undefined && json.wt !== undefined) {
+	if (json.au && json.ow && json.wt) {
 		res.send(json);
 		console.log(JSON.stringify(json));
 	}
