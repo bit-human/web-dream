@@ -8,7 +8,6 @@ const unix = (date) => { return date.getTime() / 1000 };
 const start = unix(new Date('2007.03.01'));
 
 export const gettext = async (json, client) => {
-	getTumblr(json, client);
 	getWikipedia(json, client);
 }
 
