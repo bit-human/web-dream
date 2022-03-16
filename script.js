@@ -55,21 +55,25 @@ function updateChat(message) {
 
 // when loading from url
 if (sPageURL[2] != '') {
-	var json = {};
+	if (sPageURL[2] == 'new')
+		nextClick();
+	else {
+		var json = {};
+		
+		// get data from url arguments
+		split(sPageURL[2], /&/i, 12).forEach(arg => {
+			var keyVal = split(arg, /=/i, 1);
+			json[keyVal[0]] = keyVal[1];
+		});
 	
-	// get data from url arguments
-	split(sPageURL[2], /&/i, 12).forEach(arg => {
-		var keyVal = split(arg, /=/i, 1);
-		json[keyVal[0]] = keyVal[1];
-	});
-
-	// convert hex string to rgb array
-	var hex = json.co;
-	json.co = [];
-	for (i = 0; i < 3; i++)
-		json.co[i] = parseInt(hex.substring(i * 2, i * 2 + 2), 16);
-
-	createPage(json);
+		// convert hex string to rgb array
+		var hex = json.co;
+		json.co = [];
+		for (i = 0; i < 3; i++)
+			json.co[i] = parseInt(hex.substring(i * 2, i * 2 + 2), 16);
+	
+		createPage(json);
+	}
 }
 
 // on door click
