@@ -216,28 +216,51 @@ function processArticle(text) {
 	
 	// remove everything except paragraphs
 	var index = text.indexOf("<p>");
+	var list = text.indexOf("<ul>")
 	while (index != -1) {
 		var end = text.indexOf("</p>", index) + "</p>".length;
-		var paragraph = text.substring(index, end);
+		article = isolate(text.substring(index, end), article);
 		
-		// remove any link references
-		var start = 0;
-		var ref = paragraph.indexOf("<a");
-		while (ref != -1) {
-			article = article + paragraph.substring(start, ref);
-			start = paragraph.indexOf(">", ref) + 1;
-			ref = paragraph.indexOf("</a", start);
-			
-			article = article + paragraph.substring(start, ref);
-			start = paragraph.indexOf(">", ref) + 1;
-			ref = paragraph.indexOf("<a", start);
-		}
-		article = article + paragraph.substring(start);
 		
 		index = text.indexOf("<p>", end);
+		
+		// add lists
+		if (list != -1 && list < index) {
+			
+		}
 	}
 	
 	return article;
+}
+
+function isolate(paragraph, article) {
+	// remove any link references
+	var start = 0;
+	var ref = paragraph.indexOf("<a");
+	while (ref != -1) {
+		article = article + paragraph.substring(start, ref);
+		start = paragraph.indexOf(">", ref) + 1;
+		ref = paragraph.indexOf("</a", start);
+		
+		article = article + paragraph.substring(start, ref);
+		start = paragraph.indexOf(">", ref) + 1;
+		ref = paragraph.indexOf("<a", start);
+	}
+	
+	// remove any superscripts
+	start = 0;
+	ref = paragraph.indexOf("<sup id");
+	while (ref != -1) {
+		article = article + paragraph.substring(start, ref);
+		start = paragraph.indexOf(">", ref) + 1;
+		ref = paragraph.indexOf("</sup", start);
+		
+		article = article + paragraph.substring(start, ref);
+		start = paragraph.indexOf(">", ref) + 1;
+		ref = paragraph.indexOf("<sup id", start);
+	}
+	
+	return article + paragraph.substring(start);
 }
 
 // determine black or white text based on background
