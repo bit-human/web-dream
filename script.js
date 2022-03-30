@@ -230,6 +230,13 @@ function processArticle(text) {
 		}
 	}
 	
+	// add lists
+	if (list != -1) {
+		var end = text.indexOf("</ul>", list) + "</ul>".length;
+		article = isolate(text.substring(list, end), article);
+		list = text.indexOf("<ul>", end);
+	}
+	
 	return article;
 }
 
