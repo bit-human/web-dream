@@ -249,7 +249,7 @@ function isolate(paragraph, article) {
 	
 	// remove any superscripts
 	start = 0;
-	ref = paragraph.indexOf("<sup id");
+	ref = paragraph.indexOf("<sup");
 	while (ref != -1) {
 		article = article + paragraph.substring(start, ref);
 		start = paragraph.indexOf(">", ref) + 1;
@@ -257,7 +257,7 @@ function isolate(paragraph, article) {
 		
 		article = article + paragraph.substring(start, ref);
 		start = paragraph.indexOf(">", ref) + 1;
-		ref = paragraph.indexOf("<sup id", start);
+		ref = paragraph.indexOf("<sup", start);
 	}
 	
 	return article + paragraph.substring(start);
