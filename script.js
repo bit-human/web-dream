@@ -220,13 +220,13 @@ function processArticle(text) {
 	while (index != -1) {
 		var end = text.indexOf("</p>", index) + "</p>".length;
 		article = isolate(text.substring(index, end), article);
-		
-		
 		index = text.indexOf("<p>", end);
 		
 		// add lists
 		if (list != -1 && list < index) {
-			
+			end = text.indexOf("</ul>", list) + "</ul>".length;
+			article = isolate(text.substring(list, end), article);
+			list = text.indexOf("<ul>", end);
 		}
 	}
 	
@@ -245,19 +245,6 @@ function isolate(paragraph, article) {
 		article = article + paragraph.substring(start, ref);
 		start = paragraph.indexOf(">", ref) + 1;
 		ref = paragraph.indexOf("<a", start);
-	}
-	
-	// remove any superscripts
-	start = 0;
-	ref = paragraph.indexOf("<sup");
-	while (ref != -1) {
-		article = article + paragraph.substring(start, ref);
-		start = paragraph.indexOf(">", ref) + 1;
-		ref = paragraph.indexOf("</sup", start);
-		
-		article = article + paragraph.substring(start, ref);
-		start = paragraph.indexOf(">", ref) + 1;
-		ref = paragraph.indexOf("<sup", start);
 	}
 	
 	return article + paragraph.substring(start);
