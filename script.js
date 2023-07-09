@@ -1,4 +1,5 @@
-var serverURL = "https://web-dream-server.herokuapp.com";
+var serverURL = "http://localhost:5000";
+serverURL = "https://web-dream-server.onrender.com/retrieve";
 const socketURL = serverURL.replace(/^http/, 'ws') + '/websocket';
 
 const sPageURL = split(window.location.search.substring(1), /\\?/i, 2);
@@ -136,7 +137,7 @@ function createPage(json) {
 	// set page elements
 	image.src = `https://farm${json.fr}.staticflickr.com/${json.sr}/${json.pi}_${json.sc}_b.jpg`;
 
-	source.src = `https://freesound.org/data/previews/${json.sb}/${json.si}_${json.ss}-lq.mp3`;
+	source.src = `https://cdn.freesound.org/previews/${json.sb}/${json.si}_${json.ss}-lq.mp3`;
 	audio.load();
 	audio.volume = .5;
 	
