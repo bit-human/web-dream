@@ -4,9 +4,9 @@ export const websocket = (server) => {
 	var wss = new WebSocketServer({ server: server, path: "/websocket" });
 	
 	wss.on('connection', function connection(ws) {
-//		var ip = ws._socket.remoteAddress.split(':');
-//		ip = ip[ip.length - 1];
-		var ip = ws._socket.remoteAddress;
+		var ip = ws._socket.remoteAddress.split(':');
+		ip = ip[ip.length - 1];
+//		var ip = ws._socket.remoteAddress;
 		
 	    ws.on('message', function(message) {
 			if (message.toString() == '')
