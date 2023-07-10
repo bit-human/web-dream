@@ -1,12 +1,15 @@
 import { WebSocketServer } from 'ws';
 
+var connected
+
 export const websocket = (server) => {
 	var wss = new WebSocketServer({ server: server, path: "/websocket" });
 	
-	wss.on('connection', function connection(ws) {
-		var ip = ws._socket.remoteAddress.split(':');
-		ip = ip[ip.length - 1];
-//		var ip = ws._socket.remoteAddress;
+	wss.on('connection', function connection(ws, req) {
+		
+//		var ip = ws._socket.remoteAddress.split(':');
+//		ip = ip[ip.length - 1];
+		var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 		
 	    ws.on('message', function(message) {
 			if (message.toString() == '')
