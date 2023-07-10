@@ -1,11 +1,12 @@
 import { WebSocketServer } from 'ws';
 
-var connected;
+var connected = 0;
 
 export const websocket = (server) => {
 	var wss = new WebSocketServer({ server: server, path: "/websocket" });
 	
 	wss.on('connection', function connection(ws, req) {
+		connected++;
 		
 		var ip = req.headers['x-forwarded-for'].split(', ')[0] || req.socket.remoteAddress.split(':')[2];
 		
@@ -15,7 +16,10 @@ export const websocket = (server) => {
 			else
 				wss.broadcast(`${ip}: ${message.toString()}`);
 	    });
-	    ws.on('close', () => wss.broadcast(`${ip} is disconnected`));
+	    ws.on('close', () => {
+			wss.broadcast(`${ip} is disconnected`);
+			connected--;
+		});
 	    
 		wss.broadcast(`${ip} is connected`);
 	});
