@@ -10,6 +10,7 @@ export const websocket = (server) => {
 //		var ip = ws._socket.remoteAddress.split(':');
 //		ip = ip[ip.length - 1];
 		var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+		ip = ip.split(', ')[0];
 		
 	    ws.on('message', function(message) {
 			if (message.toString() == '')
