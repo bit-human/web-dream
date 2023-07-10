@@ -1,14 +1,13 @@
 import { WebSocketServer } from 'ws';
 
-var connected
+var connected;
 
 export const websocket = (server) => {
 	var wss = new WebSocketServer({ server: server, path: "/websocket" });
 	
 	wss.on('connection', function connection(ws, req) {
 		
-		var ip = req.headers['x-forwarded-for'].split(', ') || req.socket.remoteAddress.split(':');
-		ip = ip[ip.length - 1];
+		var ip = req.headers['x-forwarded-for'].split(', ')[0] || req.socket.remoteAddress.split(':')[2];
 		
 	    ws.on('message', function(message) {
 			if (message.toString() == '')
